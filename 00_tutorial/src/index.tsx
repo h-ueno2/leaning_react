@@ -1,50 +1,70 @@
+import { type } from "os";
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 
-function Square(props) {
+/**
+ * Squareのprops
+ */
+type SquareProps = {
+  value: string;
+  onClick: () => void;
+};
+
+const Square: React.FC<SquareProps> = (props) => {
   return (
     <button className="square" onClick={props.onClick}>
       {props.value}
     </button>
   );
-}
+};
 
-class Board extends React.Component {
-  renderSquare(i) {
-    return (
-      <Square
-        value={this.props.squares[i]}
-        onClick={() => this.props.onClick(i)}
-      />
-    );
-  }
+/**
+ * BoardクラスのProps
+ */
+type BoardProps = {
+  squares: Array<string>;
+  onClick: (i: number) => void;
+};
 
-  render() {
-    return (
-      <div>
-        <div className="board-row">
-          {this.renderSquare(0)}
-          {this.renderSquare(1)}
-          {this.renderSquare(2)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(3)}
-          {this.renderSquare(4)}
-          {this.renderSquare(5)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(6)}
-          {this.renderSquare(7)}
-          {this.renderSquare(8)}
-        </div>
+const Board: React.FC<BoardProps> = (props) => {
+  const renderSquare = (i: number) => {
+    return <Square value={props.squares[i]} onClick={() => props.onClick(i)} />;
+  };
+
+  return (
+    <div>
+      <div className="board-row">
+        {renderSquare(0)}
+        {renderSquare(1)}
+        {renderSquare(2)}
       </div>
-    );
-  }
-}
+      <div className="board-row">
+        {renderSquare(3)}
+        {renderSquare(4)}
+        {renderSquare(5)}
+      </div>
+      <div className="board-row">
+        {renderSquare(6)}
+        {renderSquare(7)}
+        {renderSquare(8)}
+      </div>
+    </div>
+  );
+};
 
-class Game extends React.Component {
-  constructor(props) {
+type History = {
+  squares: Array<string>;
+};
+
+type GameState = {
+  history: Array<History>;
+  stepNumber: number;
+  xIsNext: boolean;
+};
+
+class Game extends React.Component<{}, GameState> {
+  constructor(props: {}) {
     super(props);
     this.state = {
       history: [
@@ -57,7 +77,7 @@ class Game extends React.Component {
     };
   }
 
-  handleClick(i) {
+  handleClick(i: number) {
     const history = this.state.history.slice(0, this.state.stepNumber + 1);
     const current = history[history.length - 1];
     const squares = current.squares.slice();
@@ -76,7 +96,7 @@ class Game extends React.Component {
     });
   }
 
-  jumpTo(step) {
+  jumpTo(step: number) {
     this.setState({
       stepNumber: step,
       xIsNext: step % 2 === 0,
@@ -125,7 +145,7 @@ class Game extends React.Component {
 
 ReactDOM.render(<Game />, document.getElementById("root"));
 
-function calculateWinner(squares) {
+function calculateWinner(squares: Array<string>) {
   const lines = [
     [0, 1, 2],
     [3, 4, 5],
