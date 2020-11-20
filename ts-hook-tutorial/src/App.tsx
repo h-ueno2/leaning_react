@@ -2,30 +2,38 @@ import React, { useState } from "react";
 import "./App.css";
 import { BookToRead } from "./BookToRead";
 import BookRow from "./BookRow";
+import Modal from "react-modal";
+import BookSearchDialog from "./BookSearchDialog";
+import { BookDescription } from "./BookDescription";
 
-const dummyBooks: BookToRead[] = [
-  {
-    id: 1,
-    title: 'はじめてのReact',
-    authors: 'ダミー',
-    memo: '',
+Modal.setAppElement("#root");
+
+const customStyles = {
+  overlay: {
+    backgroundColor: "rgba(0, 0, 0, 0.8)"
   },
-  {
-    id: 2,
-    title: 'React Hooks入門',
-    authors: 'ダミー',
-    memo: '',
-  },
-  {
-    id: 3,
-    title: '実践Reactアプリケーション開発',
-    authors: 'ダミー',
-    memo: '',
-  },
-];
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    padding: 0,
+    transform: "translate(-50%, -50%)"
+  }
+}
 
 const App = () => {
-  const [books, setBooks] = useState(dummyBooks);
+  const [books, setBooks] = useState([] as BookToRead[]);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  const handleAddClick = () => {
+    setModalIsOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setModalIsOpen(false);
+  }
 
   const handleBookDelete = (id: number) => {
     const newBooks = books.filter((b) => b.id !== id);
@@ -37,6 +45,13 @@ const App = () => {
       return b.id === id ? { ...b, memo: memo } : b;
     });
     setBooks(newBooks);
+  }
+
+  const handleBookAdd = (book: BookDescription) => {
+    const newBook: BookToRead = { ...book, id: books.length + 1, memo: "" };
+    const newBooks = [ ...books, newBook ];
+    setBooks(newBooks);
+    setModalIsOpen(false);
   }
 
   const bookRows = books.map((b) => {
@@ -54,11 +69,20 @@ const App = () => {
     <div className='App'>
       <section className='nav'>
         <h1>読みたい本リスト</h1>
-        <div className='button-like'>本を追加</div>
+        <div className='button-like' onClick={handleAddClick}>
+          本を追加
+        </div>
       </section>
       <section className='main'>
         { bookRows }
       </section>
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={handleModalClose}
+        style={customStyles}
+      >
+        <BookSearchDialog maxResults={20} onBookAdd={(b) => handleBookAdd(b)}/>
+      </Modal>
     </div>
   );
 };
