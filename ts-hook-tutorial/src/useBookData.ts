@@ -27,10 +27,9 @@ function extractBooks(json: any): BookDescription[] {
 
 export const useBookData = (title: string, author: string, maxResults: number) => {
   const [books, setBooks] = useState([] as BookDescription[]);
-  const [isSearching, setIsSearching] = useState(false);
 
   useEffect(() => {
-    if (isSearching) {
+    if (title || author) {
       const url = buildSearchUrl(title, author, maxResults);
       fetch(url)
         .then((res) => {
@@ -46,8 +45,7 @@ export const useBookData = (title: string, author: string, maxResults: number) =
           console.error(err);
         });
     }
-    setIsSearching(false);
-  }, [isSearching]);
+  }, [title, author, maxResults]);
 
-  return [books, setIsSearching] as const;
+  return books;
 }
