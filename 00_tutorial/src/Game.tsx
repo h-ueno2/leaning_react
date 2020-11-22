@@ -96,3 +96,5 @@ function calculateWinner(squares: Array<string>) {
   }
   return null;
 }
+
+export default Game;
