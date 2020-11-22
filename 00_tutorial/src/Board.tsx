@@ -1,6 +1,4 @@
 import React from "react";
-import ReactDOM from "react-dom";
-
 import Square from "./Square";
 
 /**
@@ -11,7 +9,7 @@ type BoardProps = {
   onClick: (i: number) => void;
 };
 
-const Board: React.FC<BoardProps> = (props) => {
+const Board = (props:BoardProps) => {
   const renderSquare = (i: number) => {
     return <Square value={props.squares[i]} onClick={() => props.onClick(i)} />;
   };
