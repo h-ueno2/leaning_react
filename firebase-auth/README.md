@@ -1,3 +1,9 @@
+# 参考資料
+
+- [【React】 Firebase を使用して認証機能の実装](https://qiita.com/k-penguin-sato/items/6e892231922b360a8659)
+
+参考資料のソースを TypeScript を使って書き換えてみる。
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
