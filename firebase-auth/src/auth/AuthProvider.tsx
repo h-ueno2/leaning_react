@@ -11,7 +11,7 @@ export type AuthContextProps = {
   currentUser: firebase.default.User | null;
 };
 
-export const AuthProvider = (children: ReactChild) => {
+export const AuthProvider: React.FunctionComponent = (props) => {
   const [currentUser, setCurrentUser] = useState<firebase.default.User | null>(
     null
   );
@@ -46,7 +46,7 @@ export const AuthProvider = (children: ReactChild) => {
         currentUser,
       }}
     >
-      {children}
+      {props.children}
     </AuthContext.Provider>
   );
 };
