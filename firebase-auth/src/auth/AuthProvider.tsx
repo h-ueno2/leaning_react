@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { app } from "../base";
+import * as H from "history";
 
 const defaultProp: AuthContextProps = {
-  login: (email: string, password: string, history: string[]) => {},
-  signup: (email: string, password: string, history: string[]) => {},
+  login: (email: string, password: string, history: H.History) => {},
+  signup: (email: string, password: string, history: H.History) => {},
   currentUser: null,
 };
 
@@ -12,8 +13,8 @@ export const AuthContext = React.createContext<AuthContextProps>(defaultProp);
 
 // ContextのPropに使用する型
 export type AuthContextProps = {
-  login: (email: string, password: string, history: string[]) => void;
-  signup: (email: string, password: string, history: string[]) => void;
+  login: (email: string, password: string, history: H.History) => void;
+  signup: (email: string, password: string, history: H.History) => void;
   currentUser: firebase.default.User | null;
 };
 
@@ -22,7 +23,7 @@ export const AuthProvider: React.FunctionComponent = (props) => {
     null
   );
 
-  const login = async (email: string, password: string, history: string[]) => {
+  const login = async (email: string, password: string, history: H.History) => {
     try {
       await app.auth().signInWithEmailAndPassword(email, password);
       history.push("/");
@@ -31,7 +32,11 @@ export const AuthProvider: React.FunctionComponent = (props) => {
     }
   };
 
-  const signup = async (email: string, password: string, history: string[]) => {
+  const signup = async (
+    email: string,
+    password: string,
+    history: H.History
+  ) => {
     try {
       await app.auth().createUserWithEmailAndPassword(email, password);
       history.push("/");
