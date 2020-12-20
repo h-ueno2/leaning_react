@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Route, RouteComponentProps, RouteProps } from "react-router-dom";
+import { Route, RouteProps } from "react-router-dom";
 import { AuthContext } from "./AuthProvider";
 import Login from "./Login";
 
