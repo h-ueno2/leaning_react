@@ -7,7 +7,7 @@ const PrivateRoute = (props: RouteProps) => {
   const { currentUser } = useContext(AuthContext);
   const Component = currentUser ? props.component : Login;
 
-  return <Route props component={Component} />;
+  return <Route path={props.path} exact={props.exact} component={Component} />;
 };
 
 export default PrivateRoute;
