@@ -1,8 +1,14 @@
-import React, { ReactChild, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { app } from "../base";
 
+const defaultProp: AuthContextProps = {
+  login: (email: string, password: string, history: string[]) => {},
+  signup: (email: string, password: string, history: string[]) => {},
+  currentUser: null,
+};
+
 // Contextを作成
-export const AuthContext = React.createContext<AuthContextProps | null>(null);
+export const AuthContext = React.createContext<AuthContextProps>(defaultProp);
 
 // ContextのPropに使用する型
 export type AuthContextProps = {
