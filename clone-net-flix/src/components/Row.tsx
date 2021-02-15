@@ -72,7 +72,7 @@ export const Row = ({ title, fetchUrl, isLargeRow }: Props) => {
             <img
               key={movie.id}
               className={`Row-poster ${isLargeRow && "Row-poster-large"}`}
-              src={`${base_url}${
+              src={`${base_url}/${
                 isLargeRow ? movie.poster_path : movie.backdrop_path
               }`}
               alt={movie.name}
