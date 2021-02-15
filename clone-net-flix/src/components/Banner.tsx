@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { requests } from "./request";
+import { requests } from "../request";
+import "./Banner.scss";
 
 type movieProps = {
   title?: string;
@@ -14,7 +15,7 @@ export const Banner = () => {
   const [movie, setMovie] = useState<movieProps>({});
   useEffect(() => {
     async function fetchData() {
-      const request = await axios.get(requests.fetchNetFlixOriginals);
+      const request = await axios.get(requests.feachNetflixOriginals);
       console.log(request.data.result);
 
       setMovie(
