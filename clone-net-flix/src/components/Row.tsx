@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import YouTube from "react-youtube";
 import axios from "../axios";
+import { API_KEY } from "../request";
 import "./Row.scss";
 
 const base_url = "https://image.tmdb.org/t/p/original";
@@ -53,7 +54,9 @@ export const Row = ({ title, fetchUrl, isLargeRow }: Props) => {
     if (trailerUrl) {
       setTraierUrl("");
     } else {
-      let trailerurl = await axios.get(`/movie/${movie.id}/videos?api_key=~~~`);
+      let trailerurl = await axios.get(
+        `/movie/${movie.id}/videos?api_key=${API_KEY}`
+      );
       setTraierUrl(trailerurl.data.results[0]?.key);
     }
   };
